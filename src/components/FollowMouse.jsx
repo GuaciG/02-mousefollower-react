@@ -4,6 +4,7 @@ export const FollowMouse = () => {
 	const [enabled, setEnabled] = useState(false);
 	const [position, setPosition] = useState({ x: 0, y: 0 });
 
+	//pointer move effect
 	useEffect(() => {
 		//console.log('efecto', { enabled });
 		const handleMove = event => {
@@ -22,6 +23,20 @@ export const FollowMouse = () => {
 		return () => {
 			window.removeEventListener('pointermove', handleMove);
 			setPosition({ x: 0, y: 0 });
+		};
+	}, [enabled]);
+
+	// [] --> It's executed once when the component is mounted
+	// [enabled] --> It's executed as much as the dependency
+	//changes and when the component is mounted.
+	//It's executed every time the component is rendered
+
+	//change body className
+	useEffect(() => {
+		document.body.classList.toggle('no-cursor', enabled);
+
+		return () => {
+			document.body.classList.remove('no-cursor');
 		};
 	}, [enabled]);
 
